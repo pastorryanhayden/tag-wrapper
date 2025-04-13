@@ -1,94 +1,78 @@
-# Obsidian Sample Plugin
+# Tag Wrapper
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+A plugin for Obsidian that allows you to wrap selected text with custom HTML tags.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## Motivation
+I created this plugin because I print my notes as handouts and didn't want to have to create two separate notes or to recreate my notes in a word processor like Microsoft Word or Pages.  I created a few CSS rules that added some styles to my notes when they are printed, but this CSS required adding custom HTML tags with classes (i.e. `<span class="blank">Some Text</span>`).
+I had hoped to use the [smx0/obs-text-wrapper](https://github.com/smx0/obs-text-wrapper) plugin for this, but it had a few limimation (most notably it adds the whole tag content to the closing tag, which breaks the HTML rendering.)
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+To be honest, most of this was created by Grok with a few careful prompts.  But I've tested and and am using it.  Feel free to contribute.
 
-## First time developing plugins?
+## Installation
+- Open Obsidian and go to Settings > Community Plugins.
+- Disable Safe Mode if it's enabled.
+- Click "Browse" and search for "Tag Wrapper".
+- Click "Install" and then "Enable".
+- For manual installation:
 
-Quick starting guide for new plugin devs:
+### (or if you are the adventerous sort)
+- Download the latest release from the GitHub repository.
+- Extract the files into your Obsidian vault's .obsidian/plugins/ directory.
+- Enable the plugin in Settings > Community Plugins.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## Usage
 
-## Releasing new releases
+### Configuring Tags
+1. Open Settings in Obsidian.
+2. Go to the "Tag Wrapper" section under Plugin Settings.
+3. Enter your desired opening tags in the provided fields. For example:
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+  - Tag One: <span class="highlight">
+  - Tag Two: <b>
+  - Tag Three: <i>
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+4. Save the settings.
 
-## Adding your plugin to the community plugin list
+*Note: After changing tags, you may need to reload the plugin or restart Obsidian for the changes to take effect in the command palette.*
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+### Wrapping Text
 
-## How to use
+1. Select the text you want to wrap in the editor.
+2. Open the command palette (Ctrl/Cmd + P).
+3. Search for "Wrap with [your tag]" (e.g., "Wrap with <span class="highlight">").
+4. Select the command to wrap the text.
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+#### Alternatively, assign custom keyboard shortcuts:
 
-## Manually installing the plugin
+1. Go to Settings > Hotkeys.
+2. Search for the command names (e.g., "Wrap with <span class="highlight">").
+3. Assign your desired hotkeys.
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+The plugin automatically adds a closing tag without attributes. For example, if you wrap with <span class="highlight">, the closing tag will be </span>.
 
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
+### Limitations
 
-## Funding URL
+1. Command names in the palette are set when the plugin loads. After changing tags, reload the plugin or restart Obsidian to update them.
+2. Keyboard shortcuts must be assigned manually in Obsidian's Hotkeys settings.
 
-You can include funding URLs where people who use your plugin can financially support it.
+## How It Works
 
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+The plugin registers commands for each configured tag. When a command is invoked, it:
 
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
-```
+1. Parses the opening tag to extract the tag name and attributes.
+2. Wraps the selected text with the full opening tag and a closing tag (using only the tag name).
 
-If you have multiple URLs, you can also do:
+Example:
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
+- Opening tag: <span class="highlight">
+- Closing tag: </span>
 
-## API Documentation
+This ensures properly formatted HTML output.
 
-See https://github.com/obsidianmd/obsidian-api
+## Contributing
+
+To contribute to this plugin, visit the GitHub repository and submit a pull request.
+
+## License
+This plugin is licensed under the MIT License.
+

@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "tag-wrapper",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "This is a plugin for Obsidian (https://obsidian.md) that wraps the highlighted text in a tag.  This is useful for custom css.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "tag-wrapper",
+	"name": "Tag Wrapper",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Add the ability to define html tags that you can wrap selected text in.  Useful for custom CSS styles.",
+	"author": "Ryan Hayden",
+	"authorUrl": "https://hireryanhayden.com",
 	"isDesktopOnly": false
 }
