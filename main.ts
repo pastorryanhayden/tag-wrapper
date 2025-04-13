@@ -108,9 +108,9 @@ class TagWrapperSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Tag Two')
-            .setDesc('Enter the opening tag (e.g., <b>)')
+            .setDesc('Enter the opening tag (e.g., <span class="read_text">)')
             .addText(text => text
-                .setPlaceholder('e.g., <b>')
+                .setPlaceholder('e.g., <span class="read_text">')
                 .setValue(this.plugin.settings.tagTwo)
                 .onChange(async (value) => {
                     this.plugin.settings.tagTwo = value;
@@ -119,9 +119,9 @@ class TagWrapperSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Tag Three')
-            .setDesc('Enter the opening tag (e.g., <i>)')
+            .setDesc('Enter the opening tag (e.g., <div class="hide">)')
             .addText(text => text
-                .setPlaceholder('e.g., <i>')
+                .setPlaceholder('e.g., <div class="hide">')
                 .setValue(this.plugin.settings.tagThree)
                 .onChange(async (value) => {
                     this.plugin.settings.tagThree = value;
